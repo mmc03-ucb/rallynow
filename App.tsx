@@ -12,16 +12,20 @@ const Stack = createStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="SignIn">
+      <Stack.Navigator
+        initialRouteName="SignIn"
+        screenOptions={{
+          headerShown: false,  // Hides the header by default for all screens
+        }}
+      >
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen
           name="LandingPage"
           component={LandingPage}
           options={{
-            headerShown: false,       // Hides the header
-            gestureEnabled: false     // Disables the swipe back gesture
-          }} // Hides the header on the LandingPage
+            gestureEnabled: false,  // Disables the swipe back gesture
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

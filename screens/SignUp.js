@@ -40,7 +40,7 @@ const SignUp = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Sign Up</Text>
+      <Text style={styles.title}>Welcome to RallyNow</Text>
       <TextInput
         style={styles.input}
         placeholder="Name"
@@ -52,39 +52,71 @@ const SignUp = () => {
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
+        keyboardType="email-address"
+        autoCapitalize="none"
       />
       <TextInput
         style={styles.input}
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
+        secureTextEntry
       />
       <TextInput
         style={styles.input}
         placeholder="Confirm Password"
         value={confirmPassword}
         onChangeText={setConfirmPassword}
+        secureTextEntry
       />
-      <Button title="Sign Up" onPress={handleSignUp} />
       {error ? <Text style={styles.error}>{error}</Text> : null}
-      <Button title="Go to Sign In" onPress={() => navigation.navigate('SignIn')} />
+      <Button title="Sign Up" onPress={handleSignUp} />
+      <Text style={styles.switchText}>
+        Already have an account?{' '}
+        <Text style={styles.switchLink} onPress={() => navigation.navigate('SignIn')}>
+          Sign In
+        </Text>
+      </Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    justifyContent: 'center',
     padding: 20,
+    backgroundColor: '#f9f9f9',
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 30,
+    color: '#333',
   },
   input: {
-    height: 40,
-    borderColor: 'gray',
+    height: 50,
+    borderColor: '#ddd',
     borderWidth: 1,
-    marginBottom: 12,
+    marginBottom: 15,
     padding: 10,
+    borderRadius: 8,
+    backgroundColor: '#fff',
   },
   error: {
     color: 'red',
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  switchText: {
+    textAlign: 'center',
+    marginTop: 20,
+    color: '#555',
+  },
+  switchLink: {
+    color: '#007bff',
+    fontWeight: 'bold',
   },
 });
 

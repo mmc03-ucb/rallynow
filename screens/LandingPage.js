@@ -40,8 +40,11 @@ const LandingPage = () => {
   };
 
   const handleViewMore = (type) => {
-    Alert.alert(`Viewing more ${type}`, `Show more details about ${type}`);
-    // Navigate to a specific screen or show more data in a modal
+    if (type === 'protests') {
+      navigation.navigate('ProtestList');
+    } else {
+      Alert.alert(`Viewing more ${type}`, `Show more details about ${type}`);
+    }
   };
 
   const handleSOS = () => {

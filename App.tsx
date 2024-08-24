@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import SignUp from './screens/SignUp';
 import SignIn from './screens/SignIn';
+import ProtestList from './screens/ProtestList';
 import LandingPage from './screens/LandingPage';
 import './firebaseConfig';
 
@@ -27,6 +28,7 @@ const App = () => {
             gestureEnabled: false,  // Disables the swipe back gesture
           }}
         />
+        <Stack.Screen name="ProtestList" component={ProtestList} />
       </Stack.Navigator>
     </NavigationContainer>
   );

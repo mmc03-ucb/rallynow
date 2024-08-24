@@ -7,7 +7,7 @@ import { getFirestore, collection, query, where, orderBy, limit, onSnapshot } fr
 const LandingPage = () => {
   const [upcomingProtest, setUpcomingProtest] = useState(null);
   const [latestIncident, setLatestIncident] = useState(null);
-  const [internetStatus, setInternetStatus] = useState('Connected');
+  const [internetStatus, setInternetStatus] = useState('Limited');
   const auth = getAuth();
   const db = getFirestore();
   const navigation = useNavigation();
@@ -60,14 +60,17 @@ const LandingPage = () => {
   };
 
   const handleViewMore = (type) => {
-    if (type === 'protests') {
-      navigation.navigate('ProtestList');
-    } else if (type === 'incidents') {
-      navigation.navigate('IncidentList');
-    } else {
-      Alert.alert(`Viewing more ${type}`, `Show more details about ${type}`);
-    }
-  };
+  if (type === 'protests') {
+    navigation.navigate('ProtestList');
+  } else if (type === 'incidents') {
+    navigation.navigate('IncidentList');
+  } else if (type === 'emergencyAid') {
+    navigation.navigate('FirstAidPage'); // Navigate to FirstAidPage
+  } else {
+    Alert.alert(`Viewing more ${type}`, `Show more details about ${type}`);
+  }
+};
+
 
   const handleSOS = () => {
     Alert.alert('SOS', 'Emergency services have been contacted.');
@@ -130,9 +133,9 @@ const LandingPage = () => {
             <TouchableOpacity style={styles.gridButton} onPress={() => Alert.alert('Emergency Services', 'Accessing Emergency Services...')}>
               <Text style={styles.gridButtonText}>Services</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.gridButton} onPress={() => Alert.alert('Emergency Aid', 'Accessing Emergency Aid...')}>
-              <Text style={styles.gridButtonText}>Emergency Aid</Text>
-            </TouchableOpacity>
+            <TouchableOpacity style={styles.gridButton} onPress={() => handleViewMore('emergencyAid')}>
+  <Text style={styles.gridButtonText}>Emergency Aid</Text>
+</TouchableOpacity>
             <TouchableOpacity style={styles.gridButton} onPress={() => Alert.alert('Medical ID', 'Accessing Medical ID...')}>
               <Text style={styles.gridButtonText}>Medical ID</Text>
             </TouchableOpacity>
@@ -186,23 +189,23 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   internetCard: {
-    width: 120,
-    height: 60,
-    borderRadius: 10,
-    padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(40, 167, 69, 0.5)',
-  },
+  width: 120,
+  height: 60,
+  borderRadius: 10,
+  padding: 10,
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: 'darkred',  // Dark red color
+},
   internetCardTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#28a745',
+    color: 'red',
     textAlign: 'center',
   },
   internetCardContent: {
     fontSize: 12,
-    color: '#28a745',
+    color: 'red',
     textAlign: 'center',
   },
   centerContent: {

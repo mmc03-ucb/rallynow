@@ -8,6 +8,7 @@ import ProtestList from './screens/ProtestList';
 import LandingPage from './screens/LandingPage';
 import IncidentList from './screens/IncidentList';
 import FirstAidPage from './screens/FirstAidPage';
+import EmergencyContactsScreen from './screens/EmergencyContactsScreen';
 import './firebaseConfig';
 
 const Stack = createStackNavigator();
@@ -33,6 +34,7 @@ const App = () => {
         <Stack.Screen name="ProtestList" component={ProtestList} />
         <Stack.Screen name="IncidentList" component={IncidentList} />
         <Stack.Screen name="FirstAidPage" component={FirstAidPage} />
+        <Stack.Screen name="EmergencyContactsScreen" component={EmergencyContactsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

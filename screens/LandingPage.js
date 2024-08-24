@@ -65,11 +65,14 @@ const LandingPage = () => {
   } else if (type === 'incidents') {
     navigation.navigate('IncidentList');
   } else if (type === 'emergencyAid') {
-    navigation.navigate('FirstAidPage'); // Navigate to FirstAidPage
+    navigation.navigate('FirstAidPage');
+  } else if (type === 'services') {
+    navigation.navigate('EmergencyContactsScreen'); // Navigate to EmergencyContactsScreen
   } else {
     Alert.alert(`Viewing more ${type}`, `Show more details about ${type}`);
   }
 };
+
 
 
   const handleSOS = () => {
@@ -130,9 +133,10 @@ const LandingPage = () => {
 
           {/* Grid of Buttons */}
           <View style={styles.buttonGrid}>
-            <TouchableOpacity style={styles.gridButton} onPress={() => Alert.alert('Emergency Services', 'Accessing Emergency Services...')}>
-              <Text style={styles.gridButtonText}>Services</Text>
-            </TouchableOpacity>
+            <TouchableOpacity style={styles.gridButton} onPress={() => handleViewMore('services')}>
+  <Text style={styles.gridButtonText}>Services</Text>
+</TouchableOpacity>
+
             <TouchableOpacity style={styles.gridButton} onPress={() => handleViewMore('emergencyAid')}>
   <Text style={styles.gridButtonText}>Emergency Aid</Text>
 </TouchableOpacity>

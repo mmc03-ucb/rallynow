@@ -40,6 +40,8 @@ const LandingPage = () => {
   const handleViewMore = (type) => {
     if (type === 'protests') {
       navigation.navigate('ProtestList');
+    } else if (type === 'incidents') {
+      navigation.navigate('IncidentList');
     } else {
       Alert.alert(`Viewing more ${type}`, `Show more details about ${type}`);
     }
@@ -59,10 +61,7 @@ const LandingPage = () => {
             <Text style={styles.headerText}>RallyNow</Text>
           </View>
           <TouchableOpacity
-            style={[
-              styles.internetCard,
-              { backgroundColor: 'rgba(40, 167, 69, 0.3)' }, // Slightly less transparent green background
-            ]}
+            style={styles.internetCard}
             onPress={() => handleViewMore('internet connectivity')}
           >
             <Text style={styles.internetCardTitle}>Internet</Text>
@@ -148,57 +147,53 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 30,
   },
   logoContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   logo: {
-    width: 40,
-    height: 40,
-    marginRight: 10,
+    width: 50,
+    height: 50,
+    marginRight: 15,
   },
   headerText: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: 'bold',
+    color: '#333',
   },
   internetCard: {
-    width: 103,
-    height: 50,
-    borderRadius: 15,
+    width: 120,
+    height: 60,
+    borderRadius: 10,
     padding: 10,
-    shadowColor: '#28a745',
-    shadowOpacity: 0.8,
-    shadowRadius: 10,
-    elevation: 15,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgba(40, 167, 69, 0.5)',
   },
   internetCardTitle: {
-    fontSize: 13,
-    fontWeight: 'bold',
+    fontSize: 14,
+    fontWeight: '600',
     color: '#28a745',
     textAlign: 'center',
-    marginBottom: 1,
   },
   internetCardContent: {
-    fontSize: 10,
+    fontSize: 12,
     color: '#28a745',
     textAlign: 'center',
   },
   centerContent: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
-    marginBottom: 20,
   },
   card: {
     width: '90%',
-    borderRadius: 10,
+    borderRadius: 15,
     padding: 20,
     marginBottom: 20,
+    backgroundColor: '#5F9EA0',
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 10,
@@ -206,28 +201,33 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cardTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 5,
+    marginBottom: 10,
+    color: '#fff',
     textAlign: 'center',
   },
   cardContent: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#fff',
     textAlign: 'center',
   },
   sosButton: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: 'red',
+    width: 110,
+    height: 110,
+    borderRadius: 55,
+    backgroundColor: '#FF0000',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 30,
+    shadowColor: '#FF0000',
+    shadowOpacity: 0.8,
+    shadowRadius: 15,
+    elevation: 10,
   },
   sosButtonText: {
     color: '#fff',
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: 'bold',
   },
   buttonGrid: {
@@ -235,33 +235,33 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    marginBottom: 20,
+    marginBottom: 30,
   },
   gridButton: {
     width: '48%',
     backgroundColor: '#007bff',
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 10,
+    padding: 20,
+    borderRadius: 15,
+    marginBottom: 15,
     alignItems: 'center',
   },
   gridButtonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
   },
   logoutButton: {
     width: '90%',
-    backgroundColor: 'black',
-    padding: 15,
-    borderRadius: 10,
+    backgroundColor: '#333',
+    padding: 20,
+    borderRadius: 15,
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 20,
   },
   logoutButtonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
   },

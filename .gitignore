@@ -72,3 +72,53 @@ yarn-error.log
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# React Native
+node_modules/
+ios/Pods/
+android/.gradle/
+android/app/build/
+android/.idea/
+android/local.properties
+android/app/debug.keystore
+
+# macOS
+.DS_Store
+.env
+
+# Bundler
+.bundle
+vendor/bundle
+
+# Xcode
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+*.xcworkspace
+!default.xcworkspace
+xcshareddata/
+DerivedData/
+.idea/
+
+# Android/IntelliJ
+.gradle/
+.idea/
+build/
+captures/
+.externalNativeBuild/
+
+# Firebase config
+firebaseConfig.js
+
+# Other
+yarn.lock
+package-lock.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Button, Alert, TouchableOpacity, Image, SafeAreaView } from 'react-native';
 import { getAuth, signOut } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, collection, query, where, orderBy, limit, onSnapshot } from 'firebase/firestore';
 
 const LandingPage = () => {
   const [upcomingProtest, setUpcomingProtest] = useState(null);
@@ -13,19 +13,41 @@ const LandingPage = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    // Simulate fetching data
-    setUpcomingProtest({
-      title: 'Protest for Climate Action',
-      address: '123 Main St, Springfield',
-      time: '2024-08-25 10:00 AM',
+    // Listener for upcoming protest
+    const protestQuery = query(
+      collection(db, 'protests'),
+      where('date', '>=', new Date().toISOString().split('T')[0]), // Fetch protests from today onwards
+      orderBy('date', 'asc'),
+      limit(1) // Get the next upcoming protest
+    );
+
+    const unsubscribeProtest = onSnapshot(protestQuery, (querySnapshot) => {
+      if (!querySnapshot.empty) {
+        const doc = querySnapshot.docs[0];
+        setUpcomingProtest({ id: doc.id, ...doc.data() });
+      }
     });
-    setLatestIncident({
-      title: 'Police Intervention',
-      description: 'Police dispersed protestors at Central Park.',
-      time: '2024-08-24 03:00 PM',
+
+    // Listener for the latest incident
+    const incidentQuery = query(
+      collection(db, 'incidents'),
+      orderBy('date', 'desc'),
+      limit(1) // Get the most recent incident
+    );
+
+    const unsubscribeIncident = onSnapshot(incidentQuery, (querySnapshot) => {
+      if (!querySnapshot.empty) {
+        const doc = querySnapshot.docs[0];
+        setLatestIncident({ id: doc.id, ...doc.data() });
+      }
     });
-    setInternetStatus('Connected');
-  }, []);
+
+    // Cleanup listeners on unmount
+    return () => {
+      unsubscribeProtest();
+      unsubscribeIncident();
+    };
+  }, [db]);
 
   const handleLogout = async () => {
     try {
@@ -75,9 +97,9 @@ const LandingPage = () => {
             <Text style={styles.cardTitle}>Upcoming Protest</Text>
             {upcomingProtest ? (
               <>
-                <Text style={styles.cardContent}>Next: {upcomingProtest.title}</Text>
-                <Text style={styles.cardContent}>Address: {upcomingProtest.address}</Text>
-                <Text style={styles.cardContent}>Time: {upcomingProtest.time}</Text>
+                <Text style={styles.cardTitle}>{upcomingProtest.title}</Text>
+                <Text style={styles.cardContent}>{upcomingProtest.location}</Text>
+                <Text style={styles.cardContent}>{upcomingProtest.date}</Text>
               </>
             ) : (
               <Text style={styles.cardContent}>Loading...</Text>
@@ -89,9 +111,9 @@ const LandingPage = () => {
             <Text style={styles.cardTitle}>Latest Incident</Text>
             {latestIncident ? (
               <>
-                <Text style={styles.cardContent}>{latestIncident.title}</Text>
+                <Text style={styles.cardTitle}>{latestIncident.title}</Text>
                 <Text style={styles.cardContent}>{latestIncident.description}</Text>
-                <Text style={styles.cardContent}>Time: {latestIncident.time}</Text>
+                <Text style={styles.cardContent}>{latestIncident.date}</Text>
               </>
             ) : (
               <Text style={styles.cardContent}>Loading...</Text>
@@ -133,14 +155,14 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     padding: 10,
-    borderWidth: 1, // Add a border
-    borderColor: '#ccc', // Border color
-    borderRadius: 10, // Rounded corners for the border
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 10,
     backgroundColor: '#f5f5f5',
   },
   container: {
     flex: 1,
-    padding: 10, // Add padding inside the border
+    padding: 10,
     justifyContent: 'space-between',
   },
   header: {
@@ -193,7 +215,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 20,
     marginBottom: 20,
-    backgroundColor: '#5F9EA0',
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 10,

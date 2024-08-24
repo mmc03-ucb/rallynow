@@ -69,23 +69,21 @@ const ProtestList = () => {
 
   const renderItem = ({ item }) => (
     <View style={styles.protestItem}>
-      <Text style={styles.protestTitle}>{item.title}</Text>
-      <Text style={styles.protestDetails}>Location: {item.location}</Text>
-      <Text style={styles.protestDetails}>Date: {item.date}</Text>
-      <View style={styles.voteContainer}>
-        <Text style={styles.voteCount}>Votes: {item.votes}</Text>
+      <View style={styles.voteSection}>
         <TouchableOpacity
           onPress={() => handleUpvote(item.id)}
-          style={[
-            styles.voteButton,
-            upvotedProtests[item.id] && { backgroundColor: 'green' } // Change color if upvoted
-          ]}
-          disabled={upvotedProtests[item.id]} // Disable button if already upvoted
+          disabled={upvotedProtests[item.id]}
         >
-          <Text style={styles.voteText}>
-            {upvotedProtests[item.id] ? 'Voted' : 'Upvote'}
+          <Text style={[styles.voteButton, upvotedProtests[item.id] && styles.voted]}>
+            ▲
           </Text>
         </TouchableOpacity>
+        <Text style={styles.voteCount}>{item.votes}</Text>
+      </View>
+      <View style={styles.protestContent}>
+        <Text style={styles.protestTitle}>{item.title}</Text>
+        <Text style={styles.protestDetails}>{item.location}</Text>
+        <Text style={styles.protestDetails}>{item.date}</Text>
       </View>
     </View>
   );
@@ -145,7 +143,6 @@ const ProtestList = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-end',
     padding: 20,
     backgroundColor: '#f5f5f5',
   },
@@ -159,8 +156,9 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   protestItem: {
-    backgroundColor: '#fff',
+    flexDirection: 'row',
     padding: 15,
+    backgroundColor: '#fff',
     borderRadius: 10,
     marginBottom: 10,
     shadowColor: '#000',
@@ -168,31 +166,36 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 3,
   },
+  voteSection: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 15,
+  },
+  voteButton: {
+    fontSize: 24,
+    color: '#aaa',
+  },
+  voted: {
+    color: '#007bff',
+  },
+  voteCount: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  protestContent: {
+    flex: 1,
+  },
   protestTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 5,
+    color: '#333',
   },
   protestDetails: {
     fontSize: 14,
-    color: '#555',
-    marginBottom: 5,
-  },
-  voteContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  voteCount: {
-    fontSize: 16,
-  },
-  voteButton: {
-    padding: 10,
-    backgroundColor: '#007bff',
-    borderRadius: 5,
-  },
-  voteText: {
-    color: '#fff',
+    color: '#777',
+    marginBottom: 3,
   },
   footer: {
     alignItems: 'center',

@@ -1,62 +1,33 @@
-import React from 'react';
-import { View, Text, StyleSheet, Button, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Button, Alert, TouchableOpacity } from 'react-native';
 import { getAuth, signOut } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 import { getFirestore, collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 
 const LandingPage = () => {
+  const [upcomingProtest, setUpcomingProtest] = useState(null);
+  const [latestIncident, setLatestIncident] = useState(null);
+  const [internetStatus, setInternetStatus] = useState('Connected'); // Default to connected
   const auth = getAuth();
   const db = getFirestore();
   const navigation = useNavigation();
 
-  const handleTestBackend = async () => {
-    const user = auth.currentUser;
-
-    if (user) {
-      try {
-        // Send data to Firestore under the user's uid
-        await addDoc(collection(db, 'activities'), {
-          userId: user.uid,
-          activity: 'Test backend activity',
-          timestamp: new Date(),
-        });
-        console.log('Activity sent to backend');
-      } catch (e) {
-        console.error('Error adding document: ', e);
-      }
-    } else {
-      console.log('No user is signed in');
-    }
-  };
-
-  const handleRetrieveData = async () => {
-    const user = auth.currentUser;
-
-    if (user) {
-      try {
-        // Query Firestore for documents associated with the current user's uid
-        const q = query(collection(db, 'activities'), where('userId', '==', user.uid));
-        const querySnapshot = await getDocs(q);
-
-        const activities = [];
-        querySnapshot.forEach((doc) => {
-          activities.push(doc.data());
-        });
-
-        if (activities.length > 0) {
-          console.log('Retrieved activities: ', activities);
-          Alert.alert('Retrieved Activities', JSON.stringify(activities));
-        } else {
-          console.log('No activities found for this user.');
-          Alert.alert('No Activities Found', 'No activities found for this user.');
-        }
-      } catch (e) {
-        console.error('Error retrieving documents: ', e);
-      }
-    } else {
-      console.log('No user is signed in');
-    }
-  };
+  useEffect(() => {
+    // Fetch data for upcoming protests, incidents, and internet status
+    // Replace these with actual database queries
+    setUpcomingProtest({
+      title: 'Protest for Climate Action',
+      address: '123 Main St, Springfield',
+      time: '2024-08-25 10:00 AM',
+    });
+    setLatestIncident({
+      title: 'Police Intervention',
+      description: 'Police dispersed protestors at Central Park.',
+      time: '2024-08-24 03:00 PM',
+    });
+    // Simulate checking internet status
+    setInternetStatus('Connected');
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -68,12 +39,67 @@ const LandingPage = () => {
     }
   };
 
+  const handleViewMore = (type) => {
+    Alert.alert(`Viewing more ${type}`, `Show more details about ${type}`);
+    // Navigate to a specific screen or show more data in a modal
+  };
+
+  const handleSOS = () => {
+    Alert.alert('SOS', 'Emergency services have been contacted.');
+    // Add more functionality as needed
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Landing Page</Text>
-      <Button title="Test Backend" onPress={handleTestBackend} />
-      <Button title="Retrieve Data" onPress={handleRetrieveData} />
-      <Button title="Logout" onPress={handleLogout} />
+      <View style={styles.centerContent}>
+        <TouchableOpacity style={styles.sosButton} onPress={handleSOS}>
+          <Text style={styles.sosButtonText}>SOS</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={[styles.card, { backgroundColor: '#007bff' }]} onPress={() => handleViewMore('protests')}>
+          <Text style={styles.cardTitle}>Upcoming Protest</Text>
+          {upcomingProtest ? (
+            <>
+              <Text style={styles.cardContent}>Next: {upcomingProtest.title}</Text>
+              <Text style={styles.cardContent}>Address: {upcomingProtest.address}</Text>
+              <Text style={styles.cardContent}>Time: {upcomingProtest.time}</Text>
+            </>
+          ) : (
+            <Text style={styles.cardContent}>Loading...</Text>
+          )}
+        </TouchableOpacity>
+
+        <TouchableOpacity style={[styles.card, { backgroundColor: '#fd7e14' }]} onPress={() => handleViewMore('incidents')}>
+          <Text style={styles.cardTitle}>Latest Incident</Text>
+          {latestIncident ? (
+            <>
+              <Text style={styles.cardContent}>{latestIncident.title}</Text>
+              <Text style={styles.cardContent}>{latestIncident.description}</Text>
+              <Text style={styles.cardContent}>Time: {latestIncident.time}</Text>
+            </>
+          ) : (
+            <Text style={styles.cardContent}>Loading...</Text>
+          )}
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[
+            styles.card,
+            { backgroundColor: internetStatus === 'Connected' ? '#28a745' : '#dc3545' },
+          ]}
+          onPress={() => handleViewMore('internet connectivity')}
+        >
+          <Text style={styles.cardTitle}>Internet Connectivity</Text>
+          <Text style={styles.cardContent}>Status: {internetStatus}</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={() => Alert.alert('More Features', 'Here you can access more features later.')}>
+          <Text style={styles.moreFeaturesText}>More Features</Text>
+        </TouchableOpacity>
+        <Button title="Logout" color="red" onPress={handleLogout} />
+      </View>
     </View>
   );
 };
@@ -81,13 +107,61 @@ const LandingPage = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 20,
+    backgroundColor: '#f5f5f5',
+    justifyContent: 'space-between', // Space between the content and the buttons at the bottom
+  },
+  centerContent: {
+    flex: 1,
+    justifyContent: 'center', // Center content vertically
+    alignItems: 'center', // Center content horizontally
+  },
+  sosButton: {
+    width: 100, // Size of the SOS button
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: 'red',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  text: {
-    fontSize: 24,
-    fontWeight: 'bold',
     marginBottom: 20,
+  },
+  sosButtonText: {
+    color: '#fff',
+    fontSize: 24, // Font size for the SOS button text
+    fontWeight: 'bold',
+  },
+  card: {
+    width: '90%', // Width of the cards
+    borderRadius: 10,
+    padding: 20,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 5,
+    alignItems: 'center',
+  },
+  cardTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 5,
+    textAlign: 'center',
+  },
+  cardContent: {
+    fontSize: 16,
+    color: '#fff',
+    textAlign: 'center',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+    width: '100%',
+  },
+  moreFeaturesText: {
+    fontSize: 18,
+    color: '#007bff',
+    fontWeight: 'bold',
   },
 });
 

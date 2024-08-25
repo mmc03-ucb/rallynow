@@ -29,7 +29,6 @@ RallyNow is a mobile application that provides users with real-time information 
 - **Emergency Features:** Quickly access emergency services, medical ID, and emergency aid information.
 - **Community Donations:** View and donate to various organizations through the Community page.
 - **SOS Button:** Quickly contact emergency services through an SOS button.
-- **Low-Network Usability:** The app is designed to maintain essential functionality even in low-network conditions, ensuring users can access critical information when needed.
 
 ## Getting Started
 
@@ -152,6 +151,10 @@ This app integrates with Firebase Firestore to fetch real-time data:
 - **Incidents:** Data is fetched from the `incidents` collection, ordered by date to display the latest incident.
 
 Ensure your Firebase project is properly set up with Firestore collections for `protests` and `incidents`.
+
+## Growth
+
+As we continue to develop and enhance RallyNow, a key area of focus is the further implementation of Low-Network Usability features. Our goal is to expand the app's ability to maintain essential functionalities even in extremely limited connectivity environments. This includes optimizing data caching, improving offline access to critical features such as emergency contacts and medical IDs, and ensuring that users can still receive timely updates on protests and incidents whenever possible. By prioritizing these enhancements, we aim to make RallyNow an even more reliable tool for communities in all connectivity scenarios.
 
 ## Contributing
 

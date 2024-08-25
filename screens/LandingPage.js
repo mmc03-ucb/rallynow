@@ -67,7 +67,9 @@ const LandingPage = () => {
   } else if (type === 'emergencyAid') {
     navigation.navigate('FirstAidPage');
   } else if (type === 'services') {
-    navigation.navigate('EmergencyContactsScreen'); // Navigate to EmergencyContactsScreen
+    navigation.navigate('EmergencyContactsScreen');
+  } else if (type === 'medicalID') {
+    navigation.navigate('MedicalIDPage'); // Navigate to MedicalIDPage
   } else {
     Alert.alert(`Viewing more ${type}`, `Show more details about ${type}`);
   }
@@ -140,12 +142,13 @@ const LandingPage = () => {
             <TouchableOpacity style={styles.gridButton} onPress={() => handleViewMore('emergencyAid')}>
   <Text style={styles.gridButtonText}>Emergency Aid</Text>
 </TouchableOpacity>
-            <TouchableOpacity style={styles.gridButton} onPress={() => Alert.alert('Medical ID', 'Accessing Medical ID...')}>
-              <Text style={styles.gridButtonText}>Medical ID</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.gridButton} onPress={() => Alert.alert('Community', 'Accessing Community...')}>
-              <Text style={styles.gridButtonText}>Community</Text>
-            </TouchableOpacity>
+            <TouchableOpacity style={styles.gridButton} onPress={() => navigation.navigate('MedicalIDPage')}>
+  <Text style={styles.gridButtonText}>Medical ID</Text>
+</TouchableOpacity>
+
+            <TouchableOpacity style={styles.gridButton} onPress={() => navigation.navigate('CommunityPage')}>
+  <Text style={styles.gridButtonText}>Community</Text>
+</TouchableOpacity>
           </View>
 
           {/* Logout Button */}
@@ -193,14 +196,18 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   internetCard: {
-  width: 120,
-  height: 60,
-  borderRadius: 10,
-  padding: 10,
-  justifyContent: 'center',
-  alignItems: 'center',
-  backgroundColor: 'darkred',  // Dark red color
-},
+    width: 120,
+    height: 60,
+    borderRadius: 10,
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 0, 0, 0.3)',  
+    shadowColor: '#FF0000',  
+    shadowOpacity: 0.8,
+    shadowRadius: 10,
+    elevation: 15,
+  },
   internetCardTitle: {
     fontSize: 14,
     fontWeight: '600',

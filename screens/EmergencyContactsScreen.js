@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, Text, TouchableOpacity, StyleSheet, View, Linking, Image, SafeAreaView } from 'react-native';
+import { FlatList, Text, TouchableOpacity, StyleSheet, View, Alert, Image, SafeAreaView } from 'react-native';
 
 // Emergency Contacts Screen Component
 export default function EmergencyContactsScreen() {
@@ -12,9 +12,9 @@ export default function EmergencyContactsScreen() {
     { name: "Local Legal Aid", number: "+5566778899", icon: require('../assets/legal_aid_icon.png') },
   ];
 
-  // Function to make a phone call
+  // Function to show an alert instead of making a phone call
   const makeCall = (number) => {
-    Linking.openURL(`tel:${number}`);
+    Alert.alert("Making Call", `Calling ${number}`);
   };
 
   // The UI for the EmergencyContactsScreen

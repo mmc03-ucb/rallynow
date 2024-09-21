@@ -1,3 +1,5 @@
+### [Best Pitch Winner in SYNCS HACK 2024](https://devpost.com/software/mmcandco)
+
 # RallyNow App
 
 RallyNow is a mobile application that provides users with real-time information about upcoming protests, incidents, and emergency services. The app also offers features such as emergency aid, medical ID, and community donations.

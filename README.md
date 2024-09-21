@@ -1,4 +1,4 @@
-### [Best Pitch Winner in SYNCS HACK 2024](https://devpost.com/software/mmcandco)
+### [Best Pitch Winner in SYNCS HACK 2024](https://devpost.com/software/rallynow)
 
 # RallyNow App
 
